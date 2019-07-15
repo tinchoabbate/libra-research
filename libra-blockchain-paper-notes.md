@@ -1,6 +1,6 @@
 # The Libra Blockchain paper notes
 
-My personal notes on [The Libra Blockchain paper](https://developers.libra.org/docs/assets/papers/the-libra-blockchain.pdf).
+My personal notes for a quick and dirty summary on [The Libra Blockchain paper](https://developers.libra.org/docs/assets/papers/the-libra-blockchain.pdf). For more details on any section, refer to the corresponding section on the paper.
 
 ## Logical Data Model
 
