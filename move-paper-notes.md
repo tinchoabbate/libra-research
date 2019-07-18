@@ -196,13 +196,13 @@ public withdraw_from_sender(amount: u64): Coin {
 ### Instructions
 6 broad types of instructions:
 
-- Copying and moving data from local vars to stack (`CopyLoc`, `MoveLoc`) and moving data from stack to local vars `StoreLoc`
+- Copying and moving data from local vars to stack (e.g. `CopyLoc`, `MoveLoc`) and moving data from stack to local vars (e.g. `StoreLoc`)
 - Operations on typed stack values: pushing constants, arithmetic / logic operations
-- Module builtins:
+- Module builtins, such as:
   - `Pack` and `Unpack` for creating and destroying module's declared types
   - `MoveToSender` and `MoveFrom` for publishing and unpublishing the module's type under an account
   - `BorrowField` for acquiring a reference to a field of one of the module's types
-- Reference related instructions:
+- Reference related instructions, such as:
   - `ReadRef` for reading references
   - `WriteRef` for writing references
   - `ReleaseRef` for destroying a reference
