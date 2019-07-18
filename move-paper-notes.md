@@ -53,6 +53,8 @@ Approaches to make Move more verification-friendly:
 
 ### The `Currency` module
 
+See all modules in Move's standard library [here](https://github.com/libra/libra/tree/master/language/stdlib/modules).
+
 #### Declaring the module and a resource
 
 The following module is named `Currency` and declares a resource type called `Coin`:
