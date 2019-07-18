@@ -70,7 +70,7 @@ module Currency {
   - Only the module's procedures can create or destroy values of type `Coin`
 - Outside of the API exposed by this module, `move` is the only operation another module can perform on a `Coin`
 
-##### Deposit
+#### Deposit
 
 ~~~
 public deposit(payee: address, to_deposit: Coin) {
@@ -92,7 +92,7 @@ public deposit(payee: address, to_deposit: Coin) {
 }
 ~~~
 
-##### Withdraw
+#### Withdraw
 
 ~~~
 public withdraw_from_sender(amount: u64): Coin {
@@ -114,15 +114,15 @@ public withdraw_from_sender(amount: u64): Coin {
 }
 ~~~
 
-# The Move Language in detail
+## The Move Language in detail
 
-## Global state
+### Global state
 - The global state is organized as a partial map from addresses to accounts
 - Accounts contain both resource data values and module code values
 - Different resources in an account must have distinct identifiers
 - Different modules in an account must have distinct names
 
-## Modules
+### Modules
 - A module consists of:
   - Name
   - Struct declarations (including resources)
@@ -130,7 +130,7 @@ public withdraw_from_sender(amount: u64): Coin {
 - Module's code can refer to a published module using a unique identifier (module's account address + module's name)
 - Procedures of a module declare rules for creating / writing / destroying the types declared by the module
 
-## Types
+### Types
 - Primitive types:
   - Boolean
   - Unsigned integers (64 bits)
@@ -150,7 +150,7 @@ public withdraw_from_sender(amount: u64): Coin {
   - Can be dereferenced
   - If it's a struct, may not contain a field with a resource type
 
-## Values
+### Values
 - Move supports struct, primitive and reference values.
 - A struct cannot contain a reference field
 - Reference values are _transient_ => a reference must be created and destroyed during execution of a tx script
@@ -160,7 +160,7 @@ public withdraw_from_sender(amount: u64): Coin {
   - `BorrowField` reference to a struct's field (only on struct type declared in current module)
   - `BorrowGlobal` reference to a resource published under an account (only on struct type declared in current module)
 
-## Procedures and transaction scripts
+### Procedures and transaction scripts
 
 - Procedure signature: visibility + typed formal params + return types
 - A procedure declaration contains:
@@ -177,7 +177,7 @@ public withdraw_from_sender(amount: u64): Coin {
 
 - A transaction script is a procedure declaration with no associated module
 
-# Bytecode interpreter
+## Bytecode interpreter
 
 - Stack-based interpreter for Move bytecode
 - Interpreter supports procedure calls:
@@ -191,7 +191,7 @@ public withdraw_from_sender(amount: u64): Coin {
 - Each instruction costs _gas_
 - Interpreter tracks gas units remaining and halts if reaches zero
 
-## Instructions
+### Instructions
 6 broad types of instructions:
 
 - Copying and moving data from local vars to stack (`CopyLoc`, `MoveLoc`) and moving data from stack to local vars `StoreLoc`
@@ -208,12 +208,14 @@ public withdraw_from_sender(amount: u64): Coin {
 - Control-flow operations (conditional branching, calling, returning)
 - Blockchain-specific builtin operations: getting caller's address, creating a new account
 
-### Native modules
+See all instructions in [the table of Move bytecode instructions](./move-bytecode-instructions.md).
+
+#### Native modules
 - Some instructions (e.g. `sha3`) could be provided at bytecode-level. Instead, they're mplemented as modules in the "standard library".
 - Standard library procedures are declared as `native`
 - `native` procedures' bodies are provided by the Move VM
 
-# Bytecode verifier
+## Bytecode verifier
 - Statically enforces safety properties for modueles and tx scripts
 - All Move programs must go through the verifier
 - Categories for checks:
@@ -221,35 +223,35 @@ public withdraw_from_sender(amount: u64): Coin {
   - Semantic checks on procedure bodies: incorrect arguments, dangling references, duplicating resources
   - Linking uses of struct and procedures: ilegally invoking internal procedures, using procedures that do not match declaration
 
-## Control-flow graph
+### Control-flow graph
 - Verifier constructs a control-flow graphg by decomposing the instructions into a collection of basic blocks.
 - Each basic block ends with branch or return instruction
 
-## Stack balance checking
+### Stack balance checking
 - Ensures callee cannot access stack locations that belong to callers
 
-## Type checking
+### Type checking
 - Ensures each instruction and procedure is invoked with arguments of appropriate types
 - Types of local variables of a procedure are provided in bytecode
 - Types of stack values are inferred
 
-### Kind checking
+#### Kind checking
 Additional checks in type checking:
 - Resources cannot be duplicated
 - Resources cannot be destroyed
 - Resources must be used
 
-## Reference checking
+### Reference checking
 - All references must point to allocated storage (i.e. no dangling references)
 - All references must have safe read / write access
 - Reference checking scheme has "novel features" that will be a topic of a separate paper
 
-## Linking with global state
+### Linking with global state
 - Linker checks that:
   - Used struct declarations match name and kind
   - Used procedure signatures match name + visibility + formal parameter types + return types
 
-# Move next steps
+## Move next steps
 - Implementing core Libra functionality: accounts, reserve management, addition / removal of validator nodes, handling of tx fees, cold wallets.
 - New language features
   - Generics, collections and events
