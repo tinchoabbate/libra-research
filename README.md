@@ -1,5 +1,7 @@
 # libra-research
-Workspace for personal research on Libra
+Workspace for personal research on Libra.
+
+**Update**: [oops](https://blog.openzeppelin.com/libra-vulnerability-summary/)
 
 ## Index
 
